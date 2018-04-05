@@ -43,8 +43,8 @@ void FollowWall()
     }
     //FrontAvg = (FrontAvg + CmFront)/2;
     //Serial.println("Front:");
-    Serial.println(FrontAvg);
-    Serial.println(SamplesFront);
+    //Serial.println(FrontAvg);
+    //Serial.println(SamplesFront);
   }
   SamplesFront++; 
   //--------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ void FollowWall()
     if ((6.7 <= SideAvg)&&(SideAvg <= 7.1)){
       servo_LeftMotor.writeMicroseconds(1625);
       servo_RightMotor.writeMicroseconds(1625);
-      //Serial.println("STRAIGHT");
+      Serial.println("STRAIGHT");
       //Serial.println(SideAvg);
     }
 
@@ -73,7 +73,7 @@ void FollowWall()
       else if (SideAvg < 6.7){
         servo_LeftMotor.writeMicroseconds(1625);
         servo_RightMotor.writeMicroseconds(1650);
-        //Serial.println("LEFT");
+        Serial.println("LEFT");
         //Serial.println(SideAvg); 
       }
 
@@ -81,7 +81,7 @@ void FollowWall()
         else{
           servo_LeftMotor.writeMicroseconds(1650);
           servo_RightMotor.writeMicroseconds(1625);
-          //Serial.println("RIGHT");
+          Serial.println("RIGHT");
           //Serial.println(SideAvg);
         }
 

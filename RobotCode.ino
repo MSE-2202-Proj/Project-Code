@@ -168,6 +168,9 @@ float TotSide = 0;
 bool SideReady = false;
 //-----------------------------------------------------------------------------
 
+//IR pinouts-----------------------------------------------------------------------------
+
+
 void setup() {
   Wire.begin();        // Wire library required for I2CEncoder library
   Serial.begin(9600);
@@ -190,8 +193,14 @@ void setup() {
   pinMode(ci_Left_Motor, OUTPUT);
   servo_LeftMotor.attach(ci_Left_Motor);
 
+  //Set up IR sense
+  pinMode(A0, INPUT);
+  digitalWrite(A0,LOW);
+  
   //set up limit switch
   pinMode(LimitSwitch, INPUT);
+  pinMode(A1, INPUT);
+  digitalWrite(A0, HIGH);
   /*Code for IR micro cont.
   IRSensor.begin(2400);
   pinMode(A3, INPUT); //Use these in set up. It's important
@@ -217,7 +226,7 @@ void setup() {
 
   //Set up pivot motor
   PivotMotor.attach(12);
-  PivotMotor.write(40);
+  PivotMotor.write(110);
   delay(1000);
   //PivotMotor.detach();
 
@@ -260,7 +269,7 @@ void loop(){
     
     case 1:
       
-      //Serial.println("Stage 1");
+      Serial.println("Stage 1");
       //delay(500);
       //if cube it not detected...follow wall and find cube
       if (CubeStep == 0){
@@ -278,9 +287,13 @@ void loop(){
     
     case 2:
       Serial.println("Stage 2");
+      FindPyramid();
+    break;
+
+    case 3:
+       Serial.println("Stage 2");
       GetPyramid();
     break;
-    
     }  
   }
   
