@@ -146,6 +146,7 @@ long l_Right_Motor_Position;
 float EchoTimeSide;
 float EchoTimeFront;
 bool Start = false;
+bool pyramidWall = 0; 
 bool CubeGrabbed = false;
 bool CubeDetected = false;
 int StageCounter = 1;
@@ -166,6 +167,7 @@ float CmSide = 0;
 float SideAvg = 0;
 float TotSide = 0;
 bool SideReady = false;
+bool Once = false;
 //-----------------------------------------------------------------------------
 
 //IR pinouts-----------------------------------------------------------------------------
@@ -200,7 +202,7 @@ void setup() {
   //set up limit switch
   pinMode(LimitSwitch, INPUT);
   pinMode(A1, INPUT);
-  digitalWrite(A0, HIGH);
+  digitalWrite(A1, HIGH);
   /*Code for IR micro cont.
   IRSensor.begin(2400);
   pinMode(A3, INPUT); //Use these in set up. It's important
@@ -214,7 +216,7 @@ void setup() {
 
   //Set up cube grabbing arm servo
   ArmMotor.attach(11);
-  ArmMotor.write(120);  
+  ArmMotor.write(120); //120 
   delay(1000);
   ArmMotor.detach();
 
@@ -226,7 +228,7 @@ void setup() {
 
   //Set up pivot motor
   PivotMotor.attach(12);
-  PivotMotor.write(110);
+  PivotMotor.write(120);
   delay(1000);
   //PivotMotor.detach();
 
@@ -269,7 +271,7 @@ void loop(){
     
     case 1:
       
-      Serial.println("Stage 1");
+      //Serial.println("Stage 1");
       //delay(500);
       //if cube it not detected...follow wall and find cube
       if (CubeStep == 0){
@@ -291,8 +293,8 @@ void loop(){
     break;
 
     case 3:
-       Serial.println("Stage 2");
-      GetPyramid();
+       Serial.println("Stage 3");
+       GetPyramid();
     break;
     }  
   }

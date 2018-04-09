@@ -3,6 +3,7 @@ void FollowWall()
 
   //---------Get values from Side US sensor----------------------------------------------------
   Ping();
+  //Serial.println("PING");
   CmSide = EchoTimeSide/58;
   //delay(100);
   if(CmSide < 3){
@@ -11,9 +12,10 @@ void FollowWall()
   }
 
   if(CmSide > 0){   
-    SideAvg = (((SideAvg*(SamplesSide-1)) + CmSide)/(SamplesSide));
-    
-    if(SamplesSide == 100){
+    //SideAvg = (((SideAvg*(SamplesSide-1)) + CmSide)/(SamplesSide));
+
+    SideAvg = CmSide;
+    if(SamplesSide == 1){
       SamplesSide = 1;
     }
     
@@ -36,9 +38,9 @@ void FollowWall()
   }
 
   if(CmFront > 0){    
-    FrontAvg = (((FrontAvg*(SamplesFront-1)) + CmFront)/(SamplesFront));
-
-    if(SamplesFront == 10){
+    //FrontAvg = (((FrontAvg*(SamplesFront-1)) + CmFront)/(SamplesFront));
+    FrontAvg = CmFront;
+    if(SamplesFront == 1){
       SamplesFront = 1;
     }
     //FrontAvg = (FrontAvg + CmFront)/2;
@@ -57,39 +59,42 @@ void FollowWall()
   if(FrontAvg >= 3){
     FrontReady = true;
   }
-
+      Serial.print(FrontAvg);
+      Serial.print("       ");
+      Serial.print(SideAvg);
+      Serial.print("\n");
   //Wait until there is a usable values for the front and side sensors, then follow the wall
   if ((Corner == false)&&(FrontReady)&&(SideReady)){
     
     //Side Sensor, if to far turn right
-    if ((6.7 <= SideAvg)&&(SideAvg <= 7.1)){
-      servo_LeftMotor.writeMicroseconds(1625);
-      servo_RightMotor.writeMicroseconds(1625);
-      Serial.println("STRAIGHT");
+    if ((6.8 <= SideAvg)&&(SideAvg <= 7.2)){
+      servo_LeftMotor.writeMicroseconds(1675);
+      servo_RightMotor.writeMicroseconds(1675);
+      //Serial.print("STRAIGHT");
       //Serial.println(SideAvg);
     }
 
       //Side Sensor, if too close turn left
-      else if (SideAvg < 6.7){
-        servo_LeftMotor.writeMicroseconds(1625);
-        servo_RightMotor.writeMicroseconds(1650);
-        Serial.println("LEFT");
+      else if (SideAvg < 6.8){
+        servo_LeftMotor.writeMicroseconds(1300);
+        servo_RightMotor.writeMicroseconds(1700);
+        //Serial.print("LEFT");
         //Serial.println(SideAvg); 
       }
 
         //side sensor, go straight
         else{
-          servo_LeftMotor.writeMicroseconds(1650);
-          servo_RightMotor.writeMicroseconds(1625);
-          Serial.println("RIGHT");
+          servo_LeftMotor.writeMicroseconds(1700);
+          servo_RightMotor.writeMicroseconds(1300);
+          //Serial.print("RIGHT");
           //Serial.println(SideAvg);
         }
 
     //Check for corner, Front Sensor
-    if ((FrontAvg) < 6.2){
+    if ((FrontAvg) < 15){
       servo_LeftMotor.writeMicroseconds(1500);
       servo_RightMotor.writeMicroseconds(1500);
-      Serial.println("STOP");
+      //Serial.println("STOP");
 
       Corner = true;
     }
@@ -98,11 +103,11 @@ void FollowWall()
  if(Corner == true){
   //ArmMotor.write(180);  
   //delay(1000);
-  servo_LeftMotor.writeMicroseconds(1625);
-  servo_RightMotor.writeMicroseconds(1650);
+  servo_LeftMotor.writeMicroseconds(1500);
+  servo_RightMotor.writeMicroseconds(1750);
   //Serial.println("CRNR");
-  
-  
+  if(FrontAvg > 45)
+    Corner = false;
   //Corner Turning Command
   //Serial.println("STOP");
   }
