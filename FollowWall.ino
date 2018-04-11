@@ -1,3 +1,9 @@
+/*
+ * FollowWall, logic for following the wall and turning corners
+ * Authors: Daniel Zadagen, Sean Troy, Alexander Noens
+ * Date: 3/28/2017
+ */
+
 void FollowWall()
 {
 

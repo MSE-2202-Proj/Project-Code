@@ -1,3 +1,9 @@
+/*
+ * FindPyramid, logic for locating pyramid
+ * Authors: Daniel Zadagen, Sean Troy, Alexander Noens
+ * Date: 3/28/2017
+ */
+
 void FindPyramid()
 {
   int lightSensor_int;
@@ -7,7 +13,7 @@ void FindPyramid()
 
   if(Once){
     LAPyramid.attach(13);
-    LAPyramid.write(0);
+    LAPyramid.write(80);
     delay(1000);
     LAPyramid.detach();
 
@@ -15,6 +21,8 @@ void FindPyramid()
     PivotMotor.attach(12);
     PivotMotor.write(154);
     delay(1000);
+
+    Once = 0;
   }
 if(digitalRead(A0) == 0){
 
@@ -90,7 +98,7 @@ if(digitalRead(A0) == 0){
 
 
 if(FrontAvg < 25) pyramidWall = 1;
-if(FrontAvg > 25 || SideAvg < 6) pyramidWall = 0;
+if(FrontAvg > 25 || SideAvg < 10) pyramidWall = 0;
       
 if(pyramidWall == 1) {
       servo_LeftMotor.writeMicroseconds(1400);

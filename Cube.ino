@@ -1,3 +1,9 @@
+/*
+ * Cube, logic for locating and moving cube into positon
+ * Authors: Daniel Zadagen, Sean Troy, Alexander Noens
+ * Date: 3/28/2017
+ */
+
 void Cube(){
   //when limit switch detects cube...stop robot
   if ((digitalRead(LimitSwitch) == LOW)&&(CubeGrabbed == false)){
